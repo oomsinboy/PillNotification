@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/user_model.dart';
+
+import 'user_form.dart';
 
 class PageDataUser extends StatefulWidget {
   const PageDataUser({Key? key}) : super(key: key);
@@ -12,9 +15,19 @@ class PageDataUser extends StatefulWidget {
 class _PageDataUserState extends State<PageDataUser> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   late User user;
+  UserModel userModel = new UserModel();
 
   Future<void> _getUser() async {
     user = _auth.currentUser!;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.uid)
+        .get()
+        .then((value) {
+      setState(() {
+        userModel = UserModel.fromMap(value.data());
+      });
+    });
   }
 
   @override
@@ -24,10 +37,22 @@ class _PageDataUserState extends State<PageDataUser> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('ข้อมูลผู้ใช้งาน'),
+        actions: [
+          IconButton(
+              onPressed: () => Navigator.of(context)
+                  .pushNamed(UserFormScreen.routeName)
+                  .whenComplete(() => _getUser()),
+              icon: Icon(Icons.edit))
+        ],
       ),
       body: SafeArea(
           child: ListView(
@@ -60,7 +85,7 @@ class _PageDataUserState extends State<PageDataUser> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  user.displayName!,
+                  '${userModel.firstName}',
                   style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                 ),
               ],
@@ -98,9 +123,7 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      'Email : ' + user.email!,
-                    ),
+                    Text('Email : ${userModel.email}'),
                   ],
                 ),
                 SizedBox(
@@ -165,7 +188,7 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text('Number HN : '),
+                    Text('Number HN : ${userModel.numberHN}'),
                     // getHN()
                   ],
                 ),
@@ -192,7 +215,7 @@ class _PageDataUserState extends State<PageDataUser> {
                       width: 10,
                     ),
                     Text(
-                      'ที่อยู่ : ' + 'ไม่มีข้อมูล',
+                      'ที่อยู่ : ${userModel.address}',
                     ),
                   ],
                 ),
@@ -219,7 +242,7 @@ class _PageDataUserState extends State<PageDataUser> {
                       width: 10,
                     ),
                     Text(
-                      'โรคประจำตัว : ' + 'ไม่มีข้อมูล',
+                      'โรคประจำตัว : ${userModel.congenitalDisease}',
                     ),
                   ],
                 ),
@@ -246,7 +269,7 @@ class _PageDataUserState extends State<PageDataUser> {
                       width: 10,
                     ),
                     Text(
-                      'การแพ้ยา : ' + 'ไม่มีข้อมูล',
+                      'การแพ้ยา : ${userModel.drugAllergy}',
                     ),
                   ],
                 ),

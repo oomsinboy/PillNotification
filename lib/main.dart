@@ -10,17 +10,26 @@ import 'package:flutter_application_1/page/graph/graph_page.dart';
 import 'package:flutter_application_1/page/guide_pill.dart';
 import 'package:flutter_application_1/page/detail_pressure.dart';
 import 'package:flutter_application_1/page/more.dart';
+import 'package:flutter_application_1/page/screen_main/user_form.dart';
 import 'package:flutter_application_1/page/screen_main/user_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'controller/notifications.service.dart';
 import 'function/add_temp.dart';
+import 'function/ui/add_task_bar.dart';
 import 'function/ui/notification_services.dart';
 
 Future<void> main() async {
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Bangkok'));
+  initializeDateFormatting();
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationsService().initail();
   await Firebase.initializeApp();
-  await NotifyHelper().initializeNotification();
+  // await NotifyHelper().initializeNotification();
   await GetStorage.init();
   runApp(MyApp());
 }
@@ -44,6 +53,8 @@ class MyApp extends StatelessWidget {
         '/graphpage': (context) => GraphPage(),
         '/pagemore': (context) => More(),
         '/page datauser': (context) => PageDataUser(),
+        UserFormScreen.routeName: (context) => UserFormScreen(),
+        AddTaskPage.routeName: (context) => AddTaskPage(),
         //'/medpill': (context) => Medpill(),
       },
       debugShowCheckedModeBanner: false,

@@ -61,6 +61,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_launcher_name: "^0.0.1"
   typicons_flutter: ^0.5.0
+  syncfusion_flutter_charts: ^20.1.50
 #  flutter_launcher_icons: ^0.8.1
 
 flutter_launcher_name:

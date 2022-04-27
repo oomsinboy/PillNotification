@@ -8,7 +8,7 @@ class MyInputField extends StatelessWidget {
   final TextEditingController? controller;
   final Widget? widget;
 
-  const MyInputField( 
+  const MyInputField(
       {Key? key,
       required this.title,
       required this.hint,
@@ -18,7 +18,7 @@ class MyInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("เพิ่มยาที่นี่");
+    // print("เพิ่มยาที่นี่");
     return Container(
       margin: EdgeInsets.only(top: 14),
       child: Column(
@@ -31,39 +31,39 @@ class MyInputField extends StatelessWidget {
           Container(
             height: 50,
             margin: EdgeInsets.only(top: 8.0),
-            padding:  EdgeInsets.only(left: 14),
+            padding: EdgeInsets.only(left: 14),
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 1.0,
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1.0,
                 ),
-                borderRadius: BorderRadius.circular(12)
-                ),
+                borderRadius: BorderRadius.circular(12)),
             child: Row(
               children: [
                 Expanded(
-                  child: TextFormField(
-                    readOnly: widget == null?false:true,
-                    autofocus: false,
-                    cursorColor: Get.isDarkMode?Colors.grey[100]:Colors.grey[700],
-                    controller: controller,
-                    style: subtitleStyle,
-                    decoration: InputDecoration(
-                      hintText: hint,
-                      hintStyle: subtitleStyle,
-                      focusedBorder: UnderlineInputBorder(
+                    child: TextFormField(
+                  readOnly: widget == null ? false : true,
+                  autofocus: false,
+                  cursorColor:
+                      Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
+                  controller: controller,
+                  style: subtitleStyle,
+                  decoration: InputDecoration(
+                    hintText: hint,
+                    hintStyle: subtitleStyle,
+                    focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: context.theme.backgroundColor,
-                          width: 0
-                        )
-                      ),
-                      enabledBorder: UnderlineInputBorder(
+                            color: context.theme.backgroundColor, width: 0)),
+                    enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: context.theme.backgroundColor,
-                          width: 0
-                        )
-                      ),
-                    ),)
-              ),
-                widget==null?Container():Container(child: widget,)
+                            color: context.theme.backgroundColor, width: 0)),
+                  ),
+                )),
+                widget == null
+                    ? Container()
+                    : Container(
+                        child: widget,
+                      )
               ],
             ),
           )

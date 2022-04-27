@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/page/screen_main/user_page.dart';
+
+import '../login/loginMail/loginmail_screen.dart';
 
 class DrawerTest extends StatefulWidget {
   const DrawerTest({Key? key}) : super(key: key);
@@ -23,15 +26,25 @@ class _DrawerTestState extends State<DrawerTest> {
     findUid();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
 //หาค่า Uid ของ User ที่ login อยู่
-  Future<Null> findUid() async {
-    // await Firebase.initializeApp().then((value) async {
-    // ignore: await_only_futures
-    await FirebaseAuth.instance.authStateChanges().listen((event) {
-      setState(() {
-        uid = event!.uid;
-        name = event.displayName;
-        numberHN = event.displayName;
+  void findUid() {
+    // await Firebase.initialize
+    auth.authStateChanges().listen((event) async {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(event?.uid)
+          .get()
+          .then((value) {
+        setState(() {
+          uid = event!.uid;
+          name = event.displayName;
+          numberHN = value.data()?['numberHN'];
+        });
       });
     });
     // });
@@ -76,11 +89,13 @@ class _DrawerTestState extends State<DrawerTest> {
             subtitle: Text('ข้อมูลของผู้ใช้'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => PageDataUser(),
-                ),
-              );
+              Navigator.of(context)
+                  .push(
+                    MaterialPageRoute(
+                      builder: (context) => PageDataUser(),
+                    ),
+                  )
+                  .whenComplete(() => findUid());
             },
           ),
           ListTile(
@@ -107,10 +122,12 @@ class _DrawerTestState extends State<DrawerTest> {
             trailing: Icon(Icons.exit_to_app),
             onTap: () async {
               await FirebaseAuth.instance.signOut().then(
-                    (value) => Navigator.pushNamedAndRemoveUntil(
+                    (value) => Navigator.pushAndRemoveUntil(
                       context,
-                      '/authen',
-                      (route) => false,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                      ModalRoute.withName('/'),
                     ),
                   );
             },

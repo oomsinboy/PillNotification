@@ -34,7 +34,7 @@ class NotifyHelper {
         onSelectNotification: selectNotification);
   }
 
-    Future<void> displayNotification({
+  Future<void> displayNotification({
     required String title,
     required String body,
   }) async {
@@ -106,7 +106,7 @@ class NotifyHelper {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
-        payload: /*'{$task.title}|'*/  '{$task.note}|');
+        payload: /*'{$task.title}|'*/ '{$task.note}|');
   }
 
   Future<void> _configureLocalTimezone() async {
@@ -139,7 +139,7 @@ class NotifyHelper {
     } else {
       print("Notification Done");
     }
-    Get.to(() => NotifiedPage(label: payload));
+    Get.to(() => NotifiedPage(label: payload), arguments: payload);
   }
 
   Future onDidReceiveLocalNotification(

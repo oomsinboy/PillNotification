@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Navigation/navigation_drawer.dart';
 import 'package:flutter_application_1/controller/task_controller.dart';
@@ -12,6 +16,9 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
+import '../../controller/notifi_page.dart';
+import '../../controller/notifications.service.dart';
 
 class AddDrug extends StatefulWidget {
   const AddDrug({Key? key}) : super(key: key);
@@ -28,9 +35,6 @@ class _AddDrugState extends State<AddDrug> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      print("หน้าหลัก");
-    });
   }
 
   @override
@@ -52,69 +56,235 @@ class _AddDrugState extends State<AddDrug> {
     );
   }
 
-  _showTasks() {
-    print('show DATA');
-    return Expanded(
-      child: Obx(
-        () {
-          return ListView.builder(
-            itemCount: _taskController.taskList.length,
-            itemBuilder: (_, index) {
-              Task task = _taskController.taskList[index];
-              print(_taskController.taskList.length);
-              if (task.repeat == 'Daily') {
-                DateTime date =
-                    DateFormat.jm().parse(task.startTime.toString());
-                var myTime = DateFormat('HH:mm').format(date);
-                notifyHelper.scheduledNotification(
-                  int.parse(myTime.toString().split(':')[0]),
-                  int.parse(myTime.toString().split(':')[1]),
-                );
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  child: SlideAnimation(
-                    child: FadeInAnimation(
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              _showBottomSheet(context, task);
-                            },
-                            child: TaskTile(task),
-                          )
-                        ],
-                      ),
+  Widget _showTasks() {
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('drugs')
+            .doc(FirebaseAuth.instance.currentUser?.email)
+            .collection('drug')
+            .where('drug_date',
+                isEqualTo: DateFormat('yyyy-MM-dd').format(_selectedDate))
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return snapshot.data!.size == 0
+              ? Center(
+                  child: Text(
+                    'ว่าง',
+                    style: TextStyle(
+                      fontFamily: 'FC Minimal',
+                      color: Colors.grey[600],
+                      fontSize: 28,
                     ),
                   ),
-                );
-              }
-              if (task.date == DateFormat.yMd().format(_selectedDate)) {
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  child: SlideAnimation(
-                    child: FadeInAnimation(
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              _showBottomSheet(context, task);
-                            },
-                            child: TaskTile(task),
-                          )
-                        ],
+                )
+              : ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  physics: ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.size,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot document = snapshot.data!.docs[index];
+                    return AnimationConfiguration.staggeredList(
+                        position: index,
+                        child: SlideAnimation(
+                            child: FadeInAnimation(
+                                child: GestureDetector(
+                          onTap: () {
+                            // NotificationsService().sendNotificationNow(
+                            //     document.data()?['drug_notification_id'],
+                            //     'ยา: ${document.data()?['drug_name']} \nรายละเอียด:${document.data()?['drug_note']}',
+                            //     document.id);
+                            selectMenu(document.id,
+                                document.data()?['drug_notification_id']);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Card(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        'ชื่อยา: ${document.data()?['drug_name']}'),
+                                    Text(
+                                        'จำนวน: ${document.data()?['drug_quantity'] ?? 0} เม็ด/ครั้ง'),
+                                    Text(
+                                        'หมายเหตุ: ${document.data()?['drug_note']}'),
+                                    Text(
+                                        'เวลาเตือน: ${document.data()?['drug_time_start']}'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ))));
+                  });
+        });
+  }
+
+  Future<void> selectMenu(String id, int notiId) async {
+    return showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            // ListTile(
+            //   leading: const Icon(Icons.alarm),
+            //   title: const Text('test notification'),
+            //   onTap: () {
+            //     NotificationsService().sendNotificationNow(
+            //         notiId, 'ยา: $id \nรายละเอียด:$id', id);
+            //     Navigator.pop(context);
+            //   },
+            // ),
+            ListTile(
+              leading: const Icon(Icons.medication_liquid),
+              title: const Text('บันทึกการทานยา'),
+              onTap: () {
+                Navigator.pop(context);
+                Get.to(() => NotifiedPage(label: id), arguments: id);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text('แก้ไข'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .pushNamed(AddTaskPage.routeName, arguments: id)
+                    .whenComplete(() => setState(() => null));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete),
+              title: const Text('ลบ'),
+              onTap: () async {
+                Navigator.pop(context);
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('ลบการแจ้งเตือน'),
+                    content: const Text('ยืนยันการลบการแจ้งเตือนนี้หรือไม่?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('ยกเลิก'),
                       ),
-                    ),
+                      TextButton(
+                        onPressed: () {
+                          NotificationsService().cancelNotification(notiId);
+                          FirebaseFirestore.instance
+                              .collection('drugs')
+                              .doc(FirebaseAuth.instance.currentUser?.email)
+                              .collection('drug')
+                              .doc(id)
+                              .delete()
+                              .then((value) {
+                            Navigator.pop(context);
+                            setState(() {});
+                          });
+                        },
+                        child: const Text('ยืนยัน'),
+                      ),
+                    ],
                   ),
                 );
-              } else {
-                return Container();
-              }
-            },
-          );
-        },
-      ),
+
+                // await HealthCheckService().delete(checkId).catchError((ex) {
+                //   inspect(ex);
+                //   Toasts.toastError(context, null, 2);
+                // });
+                // notification =
+                //     await NotificationService().findOneByCheckId(checkId);
+                // await NotificationService()
+                //     .delete(notification.notiId ?? '')
+                //     .catchError((ex) {
+                //   inspect(ex);
+                //   Toasts.toastError(context, null, 2);
+                // });
+                // setState(() {
+                //   Toasts.toastSuccess(context, Constants.textAlertDelete, 2);
+                //   Navigator.pop(context);
+                // });
+              },
+            ),
+          ],
+        );
+      },
     );
   }
+
+  // _showTasks() {
+  //   return Expanded(
+  //     child: Obx(
+  //       () {
+  //         return ListView.builder(
+  //           itemCount: _taskController.taskList.length,
+  //           itemBuilder: (_, index) {
+  //             Task task = _taskController.taskList[index];
+  //             print(_taskController.taskList.length);
+  //             if (task.repeat == 'Daily') {
+  //               DateTime date =
+  //                   DateFormat.jm().parse(task.startTime.toString());
+  //               var myTime = DateFormat('HH:mm').format(date);
+  //               notifyHelper.scheduledNotification(
+  //                 int.parse(myTime.toString().split(':')[0]),
+  //                 int.parse(myTime.toString().split(':')[1]),
+  //               );
+  //               return AnimationConfiguration.staggeredList(
+  //                 position: index,
+  //                 child: SlideAnimation(
+  //                   child: FadeInAnimation(
+  //                     child: Row(
+  //                       children: [
+  //                         GestureDetector(
+  //                           onTap: () {
+  //                             _showBottomSheet(context, task);
+  //                           },
+  //                           child: TaskTile(task),
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ),
+  //               );
+  //             }
+  //             if (task.date == DateFormat.yMd().format(_selectedDate)) {
+  //               return AnimationConfiguration.staggeredList(
+  //                 position: index,
+  //                 child: SlideAnimation(
+  //                   child: FadeInAnimation(
+  //                     child: Row(
+  //                       children: [
+  //                         GestureDetector(
+  //                           onTap: () {
+  //                             _showBottomSheet(context, task);
+  //                           },
+  //                           child: TaskTile(task),
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ),
+  //               );
+  //             } else {
+  //               return Container();
+  //             }
+  //           },
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 
   _showBottomSheet(BuildContext context, Task task) {
     Get.bottomSheet(
@@ -253,6 +423,7 @@ class _AddDrugState extends State<AddDrug> {
         onDateChange: (date) {
           setState(() {
             _selectedDate = date;
+            print(DateFormat.yMd().format(_selectedDate));
           });
         },
       ),
@@ -284,7 +455,7 @@ class _AddDrugState extends State<AddDrug> {
             label: "+ เพิ่มยา",
             onTap: () async {
               await Get.to(() => AddTaskPage());
-              _taskController.getTasks();
+              // _taskController.getTasks();
             },
           ),
         ],
