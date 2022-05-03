@@ -125,14 +125,14 @@ class _DataHistoryListState extends State<DataHistoryList> {
 
   @override
   Widget build(BuildContext context) {
-    print('โชว์ข้อมูลความดัน');
+    // print('โชว์ข้อมูลความดัน');
     return SafeArea(
       child: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('edit_pressure')
             .doc(user.email)
             .collection('all')
-            // .orderBy('date')
+            .orderBy('Adata_time', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
@@ -159,8 +159,8 @@ class _DataHistoryListState extends State<DataHistoryList> {
                   itemCount: snapshot.data!.size,
                   itemBuilder: (context, index) {
                     DocumentSnapshot document = snapshot.data!.docs[index];
-                    print(_compareDate(
-                        document['Adata_time'].toDate().toString()));
+                    // print(_compareDate(
+                    //     document['Adata_time'].toDate().toString()));
                     if (_checkDiff(document['Adata_time'].toDate())) {
                       deleteAppointment(document.id);
                     }
@@ -176,7 +176,7 @@ class _DataHistoryListState extends State<DataHistoryList> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 5),
                                 child: Text(
-                                  'วันที่ : ' + 
+                                  'วันที่ : ' +
                                       _dateFormatter(document['Adata_time']
                                           .toDate()
                                           .toString()) +
@@ -219,21 +219,18 @@ class _DataHistoryListState extends State<DataHistoryList> {
                                         "/" +
                                             (document['data_description']
                                           .toString()),*/
-                                        style: TextStyle(
-                                            fontSize: 14),
+                                        style: TextStyle(fontSize: 14),
                                       ),
                                       Text(
                                         'ความดันโลหิตด้านล่าง : ' +
                                             (document['data_description']),
-                                        style: TextStyle(                                           
-                                            fontSize: 14),
+                                        style: TextStyle(fontSize: 14),
                                       ),
                                       Text(
-                                        'อัตราการเต้นของหัวใจ : ' + (document['data_heartrate']),
-                                        style: TextStyle(
-                                            fontSize: 14),
+                                        'อัตราการเต้นของหัวใจ : ' +
+                                            (document['data_heartrate']),
+                                        style: TextStyle(fontSize: 14),
                                       ),
-
                                     ],
                                   ),
                                   IconButton(

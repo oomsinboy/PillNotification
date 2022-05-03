@@ -31,12 +31,14 @@ class _GraphPageState extends State<GraphPage> {
           .collection("edit_pressure")
           .doc(event?.email)
           .collection('all')
-          .orderBy('Adata_time')
-          .limitToLast(7)
+          .orderBy('Adata_time', descending: true)
+          .limit(7)
           .get()
           .then((value) {
         // DateFormat.MMMMd('th').format(DateTime.parse(item.checkDate ?? DateTime.now().toString()).toLocal())
         for (QueryDocumentSnapshot item in value.docs) {
+          print(DateTime.fromMillisecondsSinceEpoch(
+              item.data()['Adata_time'].millisecondsSinceEpoch));
           chartData1.add(SalesData(
               DateTime.fromMillisecondsSinceEpoch(
                   item.data()['Adata_time'].millisecondsSinceEpoch),
@@ -60,58 +62,63 @@ class _GraphPageState extends State<GraphPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Color(0xFF3a73b5),
-          title: Text("ความดันโลหิตของฉัน"),
-        ),
-        body: loading
-            ? Center(child: CupertinoActivityIndicator(radius: 10))
-            : Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: SfCartesianChart(
-                      primaryXAxis: DateTimeAxis(),
-                      legend: Legend(
-                          isVisible: true,
-                          position: LegendPosition.top,
-                          overflowMode: LegendItemOverflowMode.wrap),
-                      tooltipBehavior: TooltipBehavior(
-                        enable: true,
-                        duration: 1,
-                      ),
-                      series: <ChartSeries>[
-                        LineSeries<SalesData, DateTime>(
-                          enableTooltip: true,
-                          dataSource: chartData1,
-                          name: 'ความดันโลหิตด้านบน (SYS)',
-                          xValueMapper: (SalesData sales, _) => sales.date,
-                          yValueMapper: (SalesData sales, _) => sales.value,
-                        ),
-                        LineSeries<SalesData, DateTime>(
-                          enableTooltip: true,
-                          dataSource: chartData2,
-                          name: 'ความดันโลหิตด้านล่าง (DIA)',
-                          xValueMapper: (SalesData sales, _) => sales.date,
-                          yValueMapper: (SalesData sales, _) => sales.value,
-                        ),
-                        LineSeries<SalesData, DateTime>(
-                          enableTooltip: true,
-                          dataSource: chartData3,
-                          name: 'อัตราการเต้นของหัวใจ (PUL)',
-                          xValueMapper: (SalesData sales, _) => sales.date,
-                          yValueMapper: (SalesData sales, _) => sales.value,
-                        ),
-                      ]),
-                ),
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Color(0xFF3a73b5),
+        title: Text("ความดันโลหิตของฉัน"),
       ),
+      body: loading
+          ? Center(child: CupertinoActivityIndicator(radius: 10))
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: SfCartesianChart(
+                    plotAreaBorderWidth: 0,
+                    margin: EdgeInsets.zero,
+                    primaryXAxis: DateTimeAxis(
+                      plotOffset: 20,
+                      interval: 1.7,
+                      isVisible: false,
+                    ),
+                    legend: Legend(
+                        isVisible: true,
+                        position: LegendPosition.top,
+                        overflowMode: LegendItemOverflowMode.wrap),
+                    tooltipBehavior: TooltipBehavior(
+                      enable: true,
+                      duration: 1,
+                    ),
+                    series: <ChartSeries>[
+                      LineSeries<SalesData, DateTime>(
+                        markerSettings: MarkerSettings(isVisible: true),
+                        enableTooltip: true,
+                        dataSource: chartData1,
+                        name: 'ความดันโลหิตด้านบน (SYS)',
+                        xValueMapper: (SalesData sales, _) => sales.date,
+                        yValueMapper: (SalesData sales, _) => sales.value,
+                      ),
+                      LineSeries<SalesData, DateTime>(
+                        markerSettings: MarkerSettings(isVisible: true),
+                        enableTooltip: true,
+                        dataSource: chartData2,
+                        name: 'ความดันโลหิตด้านล่าง (DIA)',
+                        xValueMapper: (SalesData sales, _) => sales.date,
+                        yValueMapper: (SalesData sales, _) => sales.value,
+                      ),
+                      LineSeries<SalesData, DateTime>(
+                        markerSettings: MarkerSettings(isVisible: true),
+                        enableTooltip: true,
+                        dataSource: chartData3,
+                        name: 'อัตราการเต้นของหัวใจ (PUL)',
+                        xValueMapper: (SalesData sales, _) => sales.date,
+                        yValueMapper: (SalesData sales, _) => sales.value,
+                      ),
+                    ]),
+              ),
+            ),
     );
   }
 }
