@@ -11,60 +11,47 @@ const primaryClr = bluishClr;
 const Color darkGreyClr = Color(0xFF121212);
 Color darkHeaderClr = Color(0xFF424242);
 
-class Themes{
-
-
-    static final light= ThemeData(
+class Themes {
+  static final light = ThemeData(
       backgroundColor: Colors.white,
       primaryColor: primaryClr,
-      brightness: Brightness.light
-    );
+      brightness: Brightness.light);
 
-
-    static final dark= ThemeData(
+  static final dark = ThemeData(
       backgroundColor: darkGreyClr,
       primaryColor: darkHeaderClr,
-      brightness: Brightness.dark
-    );
+      brightness: Brightness.dark);
 }
 
 TextStyle get subHeadingStyle {
-  return GoogleFonts.lato (
-    textStyle: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-      color:Get.isDarkMode?Colors.grey[400]:Colors.grey
-    )
-  );
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Get.isDarkMode ? Colors.grey[400] : Colors.grey));
 }
 
 // ignore: non_constant_identifier_names
 TextStyle get HeadingStyle {
-  return GoogleFonts.lato (
-    textStyle: TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-      color:Get.isDarkMode?Colors.white:Colors.black
-    )
-  );
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Get.isDarkMode ? Colors.white : Colors.black));
 }
 
 TextStyle get titleStyle {
   return GoogleFonts.lato(
-    textStyle: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w400,
-      color: Get.isDarkMode?Colors.white:Colors.black
-    )
-  );
+      textStyle: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w400,
+          color: Get.isDarkMode ? Colors.white : Colors.black));
 }
 
 TextStyle get subtitleStyle {
   return GoogleFonts.lato(
-    textStyle: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: Get.isDarkMode?Colors.grey[100]:Colors.grey[400]
-    )
-  );
+      textStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[600]));
 }

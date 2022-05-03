@@ -1,15 +1,12 @@
-import 'dart:developer';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/controller/task_controller.dart';
 import 'package:flutter_application_1/function/button.dart';
 import 'package:flutter_application_1/function/ui/input_field.dart';
 import 'package:flutter_application_1/function/ui/theme.dart';
-import 'package:flutter_application_1/controller/task.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -26,15 +23,12 @@ class AddTaskPage extends StatefulWidget {
 class _AddTaskPageState extends State<AddTaskPage> {
   String? users;
   final _formKey = GlobalKey<FormState>();
-  final TaskController _taskController = Get.put(TaskController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
 
   DateTime _selecteDate = DateTime.now();
-  String _endTime = '9:00 PM';
   String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
-  int _selectedRemind = 5;
   List<int> remindList = [
     5,
     10,
@@ -42,10 +36,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
     20,
   ];
 
-  String _selectedRepeat = 'ไม่มี';
   List<String> repeatList = ['ไม่มี', 'ทุกวัน', 'ทุกสัปดาห์', 'ทุกเดือน'];
 
-  int _selectedColor = 0;
   bool loading = true;
   String editId = '';
   int notiId = 0;
@@ -120,7 +112,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                             padding: EdgeInsets.only(left: 14),
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(12)),
@@ -374,57 +366,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
     }
   }
 
-  _colorPallete() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          " เลือกสี",
-          style: titleStyle,
-        ),
-        SizedBox(
-          height: 6,
-        ),
-        Wrap(
-          children: List<Widget>.generate(3, (int index) {
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedColor = index;
-                  print("$index");
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: CircleAvatar(
-                  radius: 14,
-                  backgroundColor: index == 0
-                      ? primaryClr
-                      : index == 1
-                          ? pinkClr
-                          : yellowClr,
-                  child: _selectedColor == index
-                      ? Icon(
-                          Icons.done,
-                          color: Colors.white,
-                          size: 16,
-                        )
-                      : Container(),
-                ),
-              ),
-            );
-          }),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-      ],
-    );
-  }
-
   _appBar(BuildContext context) {
     return AppBar(
-      //backgroundColor: context.theme.backgroundColor,
+      backgroundColor: Color(0xFF3a73b5),
       leading: GestureDetector(
         onTap: () {
           Get.back();
@@ -432,7 +376,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         child: Icon(
           Icons.arrow_back_ios,
           size: 20,
-          color: Get.isDarkMode ? Colors.white : Colors.black,
+          color: Get.isDarkMode ? Colors.white : Colors.white,
         ),
       ),
     );
@@ -468,9 +412,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         _startTime = _formatedTime;
       });
     else if (!isStartTime) {
-      setState(() {
-        _endTime = _formatedTime;
-      });
+      setState(() {});
       //_compareTime();
     }
   }

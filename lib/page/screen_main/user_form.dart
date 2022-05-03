@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -260,6 +258,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
                               if (!regex.hasMatch(value)) {
                                 return ("กรุณาใส่รหัสผ่านให้ถูกต้อง(Min. 6 Character)");
                               }
+                              return null;
                             },
                             onSaved: (value) {
                               oPasswordEditingController.text = value!;
@@ -297,6 +296,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
                               if (!regex.hasMatch(value)) {
                                 return ("กรุณาใส่รหัสผ่านให้ถูกต้อง(Min. 6 Character)");
                               }
+                              return null;
                             },
                             onSaved: (value) {
                               passwordEditingController.text = value!;

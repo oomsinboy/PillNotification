@@ -1,17 +1,12 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Navigation/navigation_drawer.dart';
-import 'package:flutter_application_1/controller/task_controller.dart';
 import 'package:flutter_application_1/function/ui/add_task_bar.dart';
 import 'package:flutter_application_1/function/button.dart';
-import 'package:flutter_application_1/controller/task_tile.dart';
 import 'package:flutter_application_1/function/ui/theme.dart';
 import 'package:flutter_application_1/function/ui/theme_service.dart';
-import 'package:flutter_application_1/controller/task.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +24,6 @@ class AddDrug extends StatefulWidget {
 
 class _AddDrugState extends State<AddDrug> {
   DateTime _selectedDate = DateTime.now();
-  final _taskController = Get.put(TaskController());
   var notifyHelper;
 
   @override
@@ -73,12 +67,24 @@ class _AddDrugState extends State<AddDrug> {
           }
           return snapshot.data!.size == 0
               ? Center(
-                  child: Text(
-                    'ว่าง',
-                    style: TextStyle(
-                      fontFamily: 'FC Minimal',
-                      color: Colors.grey[600],
-                      fontSize: 28,
+                  child: Container(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          height: 100,
+                        ),
+                        Expanded(
+                          child: Text(
+                            'ว่าง',
+                            style: TextStyle(
+                              fontFamily: 'FC Minimal',
+                              color: Colors.grey[600],
+                              fontSize: 28,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 )
@@ -106,6 +112,7 @@ class _AddDrugState extends State<AddDrug> {
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             child: Card(
                               child: Container(
+                                color: Colors.grey[300],
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.all(10),
                                 child: Column(
@@ -147,7 +154,7 @@ class _AddDrugState extends State<AddDrug> {
             //   },
             // ),
             ListTile(
-              leading: const Icon(Icons.medication_liquid),
+              leading: const Icon(Icons.medication_outlined),
               title: const Text('บันทึกการทานยา'),
               onTap: () {
                 Navigator.pop(context);
@@ -286,106 +293,6 @@ class _AddDrugState extends State<AddDrug> {
   //   );
   // }
 
-  _showBottomSheet(BuildContext context, Task task) {
-    Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.only(top: 2),
-        height: task.isCompleted == 1
-            ? MediaQuery.of(context).size.height * 0.24
-            : MediaQuery.of(context).size.height * 0.32,
-        color: Get.isDarkMode ? darkGreyClr : Colors.white,
-        child: Column(
-          children: [
-            Container(
-              height: 6,
-              width: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300],
-              ),
-            ),
-            Spacer(),
-            task.isCompleted == 1
-                ? Container()
-                : _bottomSheetButton(
-                    label: "สำเร็จแล้ว",
-                    onTap: () {
-                      _taskController.markTaskCompleted(task.id!);
-                      Get.back();
-                    },
-                    clr: primaryClr,
-                    context: context,
-                  ),
-            _bottomSheetButton(
-              label: "ลบข้อมูล",
-              onTap: () {
-                _taskController.delete(task);
-
-                Get.back();
-              },
-              clr: Colors.red[300]!,
-              context: context,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _bottomSheetButton(
-              label: "ออก",
-              onTap: () {
-                Get.back();
-              },
-              clr: Colors.red[300]!,
-              isClose: true,
-              context: context,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  _bottomSheetButton({
-    required String label,
-    required Function()? onTap,
-    required Color clr,
-    bool isClose = false,
-    required BuildContext context,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        height: 55,
-        width: MediaQuery.of(context).size.width * 0.9,
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: isClose == true
-                ? Get.isDarkMode
-                    ? Colors.grey[600]!
-                    : Colors.grey[300]!
-                : clr,
-          ),
-          borderRadius: BorderRadius.circular(20),
-          color: isClose == true ? Colors.transparent : clr,
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: isClose
-                ? titleStyle
-                : titleStyle.copyWith(
-                    color: Colors.white,
-                  ),
-          ),
-        ),
-      ),
-    );
-  }
-
   _addDateBar() {
     return Container(
       margin: const EdgeInsets.only(
@@ -465,28 +372,29 @@ class _AddDrugState extends State<AddDrug> {
 
   _appBar() {
     return AppBar(
-      actions: [
-        GestureDetector(
-          onTap: () {
-            ThemeService().switchTheme();
-            notifyHelper.displayNotification(
-              title: "Theme Changed",
-              body: Get.isDarkMode
-                  ? "Activated Dark Theme"
-                  : "Activated Light Theme",
-            );
-            notifyHelper.scheduledNotification();
-          },
-          child: Icon(
-            Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round,
-            size: 20,
-            color: Get.isDarkMode ? Colors.white : Colors.black,
-          ),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-      ],
+      backgroundColor: Color(0xFF3a73b5),
+      // actions: [
+      //   GestureDetector(
+      //     onTap: () {
+      //       ThemeService().switchTheme();
+      //       notifyHelper.displayNotification(
+      //         title: "Theme Changed",
+      //         body: Get.isDarkMode
+      //             ? "Activated Dark Theme"
+      //             : "Activated Light Theme",
+      //       );
+      //       notifyHelper.scheduledNotification();
+      //     },
+      //     child: Icon(
+      //       Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round,
+      //       size: 20,
+      //       color: Get.isDarkMode ? Colors.white : Colors.black,
+      //     ),
+      //   ),
+      //   SizedBox(
+      //     width: 20,
+      //   ),
+      // ],
     );
   }
 }

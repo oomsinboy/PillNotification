@@ -69,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (!regex.hasMatch(value)) {
           return ("กรุณาใส่รหัสผ่านให้ถูกต้อง(Min. 6 Character)");
         }
+        return null;
       },
       onSaved: (value) {
         passwordController.text = value!;

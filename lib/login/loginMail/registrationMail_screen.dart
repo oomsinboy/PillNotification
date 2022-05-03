@@ -128,6 +128,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           if (!regex.hasMatch(value)) {
             return ("กรุณาใส่รหัสผ่านให้ถูกต้อง(Min. 6 Character)");
           }
+          return null;
         },
         onSaved: (value) {
           passwordEditingController.text = value!;
@@ -274,6 +275,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           .then((value) async {
         // ignore: deprecated_member_use
         await value.user!
+            // ignore: deprecated_member_use
             .updateProfile(
           displayName: name,
         )

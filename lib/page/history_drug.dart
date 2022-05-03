@@ -67,6 +67,7 @@ class _HistorydrugState extends State<Historydrug> {
                           onTap: () => showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
+                              //backgroundColor: Colors.green,
                               title: const Text('ลบประวัติ'),
                               content: Text(
                                   'ยืนยันการลบประวัติยา ${document.data()?['history_drug_name']} ใช่หรือไม่?'),
@@ -95,9 +96,11 @@ class _HistorydrugState extends State<Historydrug> {
                             ),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 1),
                             child: Card(
                               child: Container(
+                                color: Colors.grey[300],
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.all(10),
                                 child: Column(

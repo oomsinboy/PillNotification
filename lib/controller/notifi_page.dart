@@ -79,10 +79,11 @@ class _NotifiedPageState extends State<NotifiedPage> {
         ? Center(child: CupertinoActivityIndicator(radius: 10))
         : Scaffold(
             appBar: AppBar(
+              backgroundColor: Color(0xFF3a73b5),
               leading: IconButton(
                 onPressed: () => Get.back(),
                 icon: Icon(Icons.arrow_back_ios),
-                color: Get.isDarkMode ? Colors.white : Colors.black,
+                color: Get.isDarkMode ? Colors.white : Colors.white,
               ),
               title: Text('บันทึกยา $name'),
               // style :TextStyle(color: Colors.black)

@@ -20,7 +20,6 @@ import 'package:timezone/timezone.dart' as tz;
 import 'controller/notifications.service.dart';
 import 'function/add_temp.dart';
 import 'function/ui/add_task_bar.dart';
-import 'function/ui/notification_services.dart';
 
 Future<void> main() async {
   tz.initializeTimeZones();
@@ -40,9 +39,9 @@ class MyApp extends StatelessWidget {
     User? user = FirebaseAuth.instance.currentUser;
     return GetMaterialApp(
       debugShowMaterialGrid: false,
-      theme: Themes.light,
-      darkTheme: Themes.dark,
-      themeMode: ThemeService().Theme,
+      //theme: Themes.light,
+      //darkTheme: Themes.dark,
+      //themeMode: ThemeService().Theme,
       initialRoute: '/',
       routes: {
         '/': (context) => user == null ? Welcome() : Home(),

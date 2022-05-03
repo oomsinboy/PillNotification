@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/page/screen_main/user_page.dart';
@@ -109,13 +108,13 @@ class _DrawerTestState extends State<DrawerTest> {
               // ...
             },
           ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: const Text('ตั้งค่า', style: TextStyle(fontSize: 20.0)),
-            subtitle: Text('ตั้งค่าการใช้งาน'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () => Navigator.pushNamed(context, '/pagemore'),
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.settings),
+          //   title: const Text('ตั้งค่า', style: TextStyle(fontSize: 20.0)),
+          //   subtitle: Text('ตั้งค่าการใช้งาน'),
+          //   trailing: Icon(Icons.keyboard_arrow_right),
+          //   onTap: () => Navigator.pushNamed(context, '/pagemore'),
+          // ),
           Divider(),
           ListTile(
             title: const Text('ออกจากระบบ', style: TextStyle(fontSize: 20.0)),
