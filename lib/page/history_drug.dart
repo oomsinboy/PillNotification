@@ -34,6 +34,7 @@ class _HistorydrugState extends State<Historydrug> {
             .collection('drugs')
             .doc(FirebaseAuth.instance.currentUser?.email)
             .collection('history')
+            .orderBy('history_date', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
