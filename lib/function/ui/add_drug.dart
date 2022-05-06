@@ -44,7 +44,16 @@ class _AddDrugState extends State<AddDrug> {
           SizedBox(
             height: 10,
           ),
-          _showTasks(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(2),
+                child: Column(children: [
+                  _showTasks(),
+                ]),
+              ),
+            ),
+          ),
         ],
       ),
     );
