@@ -27,8 +27,8 @@ class _WelcomeState extends State<Welcome> {
                   padding: const EdgeInsets.all(60),
                   child: Column(
                     children: [
-                      Image.asset("assets/image/medicine.png", height: 300),
-                      SizedBox(height: 20),
+                      Image.asset("assets/image/medicine.png", height: 250),
+                      SizedBox(height: 30),
                       Text(
                         "แนะการใช้งาน",
                         style: TextStyle(
@@ -36,7 +36,7 @@ class _WelcomeState extends State<Welcome> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 15),
                       Text(
                         "ยินดีต้อนรับเข้าสู่แอปพลิเคชันที่ สะดวก ง่าย และจะช่วยทำให้คุณทานยาได้ในเวลาที่เหมาะสม",
                         textAlign: TextAlign.center,
