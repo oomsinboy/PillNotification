@@ -57,15 +57,9 @@ class _DrawerTestState extends State<DrawerTest> {
         children: [
           UserAccountsDrawerHeader(
             currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.blueGrey,
-                child: Text(
-                  'User',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w900,
-                  ),
-                )),
+              backgroundImage: AssetImage('assets/image/icon_sample_user.png'),
+              backgroundColor: Colors.white,
+            ),
             accountName: Text(
               'ชื่อ : $name',
               style: TextStyle(

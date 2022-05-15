@@ -58,17 +58,10 @@ class _PageDataUserState extends State<PageDataUser> {
           child: ListView(
         children: [
           SizedBox(height: 15),
-          Container(
-            child: CircleAvatar(
-              radius: 80,
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage('assets/image/medicine.png'),
-            ),
-            decoration: BoxDecoration(
-                border: Border.all(
-                  width: 5,
-                ),
-                shape: BoxShape.circle),
+          ClipOval(
+            child: Image(
+                image: AssetImage('assets/image/icon_sample_user.png'),
+                height: 88),
           ),
           SizedBox(height: 25),
           Container(
