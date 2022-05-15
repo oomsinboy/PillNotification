@@ -17,6 +17,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'controller/info_pill_page.dart';
 import 'controller/notifications.service.dart';
 import 'function/add_temp.dart';
 import 'function/ui/add_task_bar.dart';
@@ -52,6 +53,8 @@ class MyApp extends StatelessWidget {
         '/graphpage': (context) => GraphPage(),
         '/pagemore': (context) => More(),
         '/page datauser': (context) => PageDataUser(),
+        '/info pill page' : (context) => InfoPillPage(),
+
         UserFormScreen.routeName: (context) => UserFormScreen(),
         AddTaskPage.routeName: (context) => AddTaskPage(),
         //'/medpill': (context) => Medpill(),

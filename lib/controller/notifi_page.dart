@@ -92,9 +92,16 @@ class _NotifiedPageState extends State<NotifiedPage> {
                 child: Container(
               padding: EdgeInsets.all(20),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Center(
+                    child: Image(
+                        image: AssetImage('assets/image/icon_success.png'),
+                        height: 150),
+                  ),
+                  SizedBox(height: 40),
+                  Center(),
                   Text(
                     'ชื่อยา: $name',
                     style: TextStyle(fontSize: 24),
@@ -114,8 +121,26 @@ class _NotifiedPageState extends State<NotifiedPage> {
                   SizedBox(height: 40),
                   Center(
                     child: Text(
-                      'บันทึกประวัติเรียบร้อยแล้ว',
-                      style: TextStyle(fontSize: 30, color: Colors.green),
+                      "บันทึกประวัติการทานยาของคุณเรียบร้อยแล้ว",
+                      style: TextStyle(fontSize: 18, color: Colors.green),
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                  Center(
+                    child: SizedBox(
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.green,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 15),
+                            textStyle: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold)),
+                        child: const Text('ตกลง'),
+                      ),
                     ),
                   ),
                 ],

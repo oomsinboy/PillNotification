@@ -104,6 +104,7 @@ class _DrawerTestState extends State<DrawerTest> {
             subtitle: Text('ข้อมูลยาโรคความดันโลหิตสูง'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
+              Navigator.pushNamed(context, '/info pill page');
               // Update the state of the app.
               // ...
             },
