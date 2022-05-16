@@ -6,6 +6,8 @@ import 'package:flutter_application_1/home.dart';
 import 'package:flutter_application_1/page/record.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 import 'dart:ui' as ui;
+
+import 'naviga_medpill2.dart';
 // import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class InfoPillPage extends StatefulWidget {
@@ -171,14 +173,14 @@ class _InfoPillPageState extends State<InfoPillPage> {
                       Container(
                         child: TextButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => PillData(
-                            //       doctor: doctor['uid'],
-                            //     ),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PillData(
+                                  doctor: doctor['uid'],
+                                ),
+                              ),
+                            );
                           },
                           child: Positioned.fill(
                             child: Row(
