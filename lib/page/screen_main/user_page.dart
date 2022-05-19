@@ -116,7 +116,7 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text('Email : ${userModel.email}'),
+                    Text('Email : ${userModel.email}')
                   ],
                 ),
                 SizedBox(
@@ -207,9 +207,9 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      'ที่อยู่ : ${userModel.address}',
-                    ),
+                    userModel.address!.isNotEmpty
+                        ? Text('ที่อยู่ : ${userModel.address}')
+                        : Text('ที่อยู่ : ไม่มีข้อมูล'),
                   ],
                 ),
                 SizedBox(
@@ -234,9 +234,13 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      'โรคประจำตัว : ${userModel.congenitalDisease}',
-                    ),
+                    userModel.congenitalDisease!.isNotEmpty
+                        ? Text(
+                            'โรคประจำตัว : ${userModel.congenitalDisease}',
+                          )
+                        : Text(
+                            'โรคประจำตัว : ไม่มีข้อมูล',
+                          )
                   ],
                 ),
                 SizedBox(
@@ -261,9 +265,13 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      'การแพ้ยา : ${userModel.drugAllergy}',
-                    ),
+                    userModel.drugAllergy!.isNotEmpty
+                        ? Text(
+                            'การแพ้ยา : ${userModel.drugAllergy}',
+                          )
+                        : Text(
+                            'การแพ้ยา : ไม่มีข้อมูล',
+                          )
                   ],
                 ),
               ],
