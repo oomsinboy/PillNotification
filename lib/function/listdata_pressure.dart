@@ -25,7 +25,7 @@ class _DataHistoryListState extends State<DataHistoryList> {
         .collection('edit_pressure')
         .doc(user.email)
         .collection('all')
-        .doc()
+        .doc(docID)
         .delete();
   }
 
@@ -58,6 +58,7 @@ class _DataHistoryListState extends State<DataHistoryList> {
         style: TextStyle(fontFamily: 'FC Minimal', fontSize: 20),
       ),
       onPressed: () {
+        print("id: $_documentID");
         deleteAppointment(_documentID);
         Navigator.of(context).pop();
       },

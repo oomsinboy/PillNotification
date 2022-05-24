@@ -32,24 +32,21 @@ class _GraphPageState extends State<GraphPage> {
           .doc(event?.email)
           .collection('all')
           .orderBy('Adata_time', descending: true)
-          .limit(7)
+          .limit(8)
           .get()
           .then((value) {
         // DateFormat.MMMMd('th').format(DateTime.parse(item.checkDate ?? DateTime.now().toString()).toLocal())
         for (QueryDocumentSnapshot item in value.docs) {
-          print(DateTime.fromMillisecondsSinceEpoch(
-              item.data()['Adata_time'].millisecondsSinceEpoch));
+          // print(
+          //     "${DateTime.fromMillisecondsSinceEpoch(item.data()['Adata_time'].millisecondsSinceEpoch).toString().split(':')[0]}:${DateTime.fromMillisecondsSinceEpoch(item.data()['Adata_time'].millisecondsSinceEpoch).toString().split(':')[1]}");
           chartData1.add(SalesData(
-              DateTime.fromMillisecondsSinceEpoch(
-                  item.data()['Adata_time'].millisecondsSinceEpoch),
+              "${DateTime.fromMillisecondsSinceEpoch(item.data()['Adata_time'].millisecondsSinceEpoch).toString().split(':')[0]}:${DateTime.fromMillisecondsSinceEpoch(item.data()['Adata_time'].millisecondsSinceEpoch).toString().split(':')[1]}",
               double.parse(item.data()['data_title'])));
           chartData2.add(SalesData(
-              DateTime.fromMillisecondsSinceEpoch(
-                  item.data()['Adata_time'].millisecondsSinceEpoch),
+              "${DateTime.fromMillisecondsSinceEpoch(item.data()['Adata_time'].millisecondsSinceEpoch).toString().split(':')[0]}:${DateTime.fromMillisecondsSinceEpoch(item.data()['Adata_time'].millisecondsSinceEpoch).toString().split(':')[1]}",
               double.parse(item.data()['data_description'])));
           chartData3.add(SalesData(
-              DateTime.fromMillisecondsSinceEpoch(
-                  item.data()['Adata_time'].millisecondsSinceEpoch),
+              "${DateTime.fromMillisecondsSinceEpoch(item.data()['Adata_time'].millisecondsSinceEpoch).toString().split(':')[0]}:${DateTime.fromMillisecondsSinceEpoch(item.data()['Adata_time'].millisecondsSinceEpoch).toString().split(':')[1]}",
               double.parse(item.data()['data_heartrate'])));
         }
 
@@ -78,10 +75,12 @@ class _GraphPageState extends State<GraphPage> {
                 child: SfCartesianChart(
                     plotAreaBorderWidth: 0,
                     margin: EdgeInsets.zero,
-                    primaryXAxis: DateTimeAxis(
-                      plotOffset: 20,
-                      interval: 1.7,
-                      isVisible: false,
+                    enableAxisAnimation: true,
+                    primaryXAxis: CategoryAxis(
+                      plotOffset: 10,
+                      interval: 1,
+                      isVisible: true,
+                      labelRotation: 90,
                     ),
                     legend: Legend(
                         isVisible: true,
@@ -92,7 +91,7 @@ class _GraphPageState extends State<GraphPage> {
                       duration: 1,
                     ),
                     series: <ChartSeries>[
-                      LineSeries<SalesData, DateTime>(
+                      LineSeries<SalesData, String>(
                         markerSettings: MarkerSettings(isVisible: true),
                         enableTooltip: true,
                         dataSource: chartData1,
@@ -100,7 +99,7 @@ class _GraphPageState extends State<GraphPage> {
                         xValueMapper: (SalesData sales, _) => sales.date,
                         yValueMapper: (SalesData sales, _) => sales.value,
                       ),
-                      LineSeries<SalesData, DateTime>(
+                      LineSeries<SalesData, String>(
                         markerSettings: MarkerSettings(isVisible: true),
                         enableTooltip: true,
                         dataSource: chartData2,
@@ -108,7 +107,7 @@ class _GraphPageState extends State<GraphPage> {
                         xValueMapper: (SalesData sales, _) => sales.date,
                         yValueMapper: (SalesData sales, _) => sales.value,
                       ),
-                      LineSeries<SalesData, DateTime>(
+                      LineSeries<SalesData, String>(
                         markerSettings: MarkerSettings(isVisible: true),
                         enableTooltip: true,
                         dataSource: chartData3,
@@ -125,6 +124,6 @@ class _GraphPageState extends State<GraphPage> {
 
 class SalesData {
   SalesData(this.date, this.value);
-  final DateTime date;
+  final String date;
   final double value;
 }

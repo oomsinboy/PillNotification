@@ -242,6 +242,9 @@ class _RecordState extends State<Record> {
   // ignore: non_constant_identifier_names
   Future<void> _createEdit_pressure() async {
     // print(dateUTC + ' ' + date_Time + ':00');
+    String resultDateTime =
+        "${pickedDate.toString().split(' ')[0]} ${time.hour}${time.hour.toString().length == 1 ? '0' : ''}:${time.minute}${time.minute.toString().length == 1 ? '0' : ''}";
+    // print(DateTime.parse(resultDateTime));
 
     FirebaseFirestore.instance
         .collection('edit_pressure')
@@ -253,7 +256,8 @@ class _RecordState extends State<Record> {
         'data_title': _data1Controller.text,
         'data_description': _data2Controller.text,
         'data_heartrate': _data3Controller.text,
-        'Adata_time': DateTime.now(),
+        'Adata_time': DateTime.parse(resultDateTime),
+        // 'Adata_time': DateTime.now(),
       },
       SetOptions(merge: true),
     );
