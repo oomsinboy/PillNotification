@@ -33,12 +33,12 @@ class _MoreState extends State<More> {
                   ),
                 ),
                 Divider(),
-                ListTile(
-                  leading: Icon(Icons.medication_outlined),
-                  title: const Text('การใช้ยาของฉัน'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {},
-                ),
+                // ListTile(
+                //   leading: Icon(Icons.medication_outlined),
+                //   title: const Text('การใช้ยาของฉัน'),
+                //   trailing: Icon(Icons.keyboard_arrow_right),
+                //   onTap: () {},
+                // ),
                 ListTile(
                   leading: Icon(Icons.auto_graph),
                   title: const Text('ความดันโลหิต'),
@@ -51,37 +51,37 @@ class _MoreState extends State<More> {
                   title: const Text('คำแนะนำในการใช้ยา'),
                   //subtitle: Text('เปลี่ยนรหัสผ่านการเข้าใช้งาน'),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () => Navigator.pushNamed(context, '/guide pill'),
+                  onTap: () => Navigator.pushNamed(context, '/guidepill'),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 10.0),
-          Card(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(9.0),
-                  child: Text(
-                    'ตั้งค่าการใช้งาน',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                ),
-                Divider(),
-                SwitchListTile(
-                  title: const Text('การแจ้งเตือนในเครื่อง'),
-                  value: _notiapp,
-                  onChanged: (bool value) {
-                    setState(() {
-                      _notiapp = value;
-                    });
-                  },
-                  secondary: const Icon(Icons.notifications_active),
-                ),
-              ],
-            ),
-          ),
+          // SizedBox(height: 10.0),
+          // Card(
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Padding(
+          //         padding: const EdgeInsets.all(9.0),
+          //         child: Text(
+          //           'ตั้งค่าการใช้งาน',
+          //           style: TextStyle(fontSize: 20.0),
+          //         ),
+          //       ),
+          //       Divider(),
+          //       SwitchListTile(
+          //         title: const Text('การแจ้งเตือนในเครื่อง'),
+          //         value: _notiapp,
+          //         onChanged: (bool value) {
+          //           setState(() {
+          //             _notiapp = value;
+          //           });
+          //         },
+          //         secondary: const Icon(Icons.notifications_active),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
       // backgroundColor: Color(0xFF73AEF5)
