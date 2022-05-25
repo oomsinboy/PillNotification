@@ -10,6 +10,7 @@ import 'package:flutter_application_1/page/graph/graph_page.dart';
 import 'package:flutter_application_1/page/guide_pill.dart';
 import 'package:flutter_application_1/page/detail_pressure.dart';
 import 'package:flutter_application_1/page/more.dart';
+import 'package:flutter_application_1/page/screen_main/guidepilltest.dart';
 import 'package:flutter_application_1/page/screen_main/user_form.dart';
 import 'package:flutter_application_1/page/screen_main/user_page.dart';
 import 'package:get/get.dart';
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
         '/graphpage': (context) => GraphPage(),
         '/pagemore': (context) => More(),
         '/page datauser': (context) => PageDataUser(),
-        '/info pill page' : (context) => InfoPillPage(),
+        '/info pill page': (context) => InfoPillPage(),
+        '/guidepill': (BuildContext context) => CourseInfoScreen(),
 
         UserFormScreen.routeName: (context) => UserFormScreen(),
         AddTaskPage.routeName: (context) => AddTaskPage(),

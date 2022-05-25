@@ -104,16 +104,6 @@ class _InfoPillPageState extends State<InfoPillPage> {
                   },
                 )
         ],
-
-        // leading: IconButton(
-        //     splashRadius: 20,
-        //     icon: Icon(
-        //       Icons.arrow_back_ios,
-        //       color: Colors.indigo,
-        //     ),
-        //     onPressed: () {
-        //       Navigator.pop(context);
-        //     }),
       ),
       body: Padding(
         padding: EdgeInsets.only(top: 10),
