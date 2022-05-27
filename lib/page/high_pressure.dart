@@ -22,7 +22,7 @@ class _HighPressureState extends State<HighPressure> {
               child: Image(image: AssetImage('assets/image/high_pressure.png')),
             ),
             ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, '/dashboard'),
+                onPressed: () => Navigator.pop(context),
                 style: ElevatedButton.styleFrom(
                     primary: Colors.redAccent,
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),

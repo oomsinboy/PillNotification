@@ -55,11 +55,11 @@ class _RecordState extends State<Record> {
             });
 
             if ((90.compareTo(DIA) == -1) || (140.compareTo(SYS) == -1)) {
-              Navigator.pushNamed(context, '/high pressure');
+              Navigator.popAndPushNamed(context, '/high pressure');
             } else if ((90.compareTo(DIA) == 1) || (140.compareTo(SYS) == 1)) {
-              Navigator.pushNamed(context, '/normal pressure');
+              Navigator.popAndPushNamed(context, '/normal pressure');
             } else if ((90.compareTo(DIA) == 0) || (140.compareTo(SYS) == 0)) {
-              Navigator.pushNamed(context, '/normal pressure');
+              Navigator.popAndPushNamed(context, '/normal pressure');
             } else
               print(90.compareTo(DIA));
           }
