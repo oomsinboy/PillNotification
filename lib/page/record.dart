@@ -23,6 +23,9 @@ class _RecordState extends State<Record> {
 
   bool _isProcessing = false;
 
+  get DIA => int.parse(_data2Controller.text);
+  get SYS => int.parse(_data1Controller.text);
+
   void initState() {
     super.initState();
     pickedDate = DateTime.now();
@@ -50,7 +53,15 @@ class _RecordState extends State<Record> {
             _formKey.currentState!.setState(() {
               _createEdit_pressure();
             });
-            Navigator.of(context).pop();
+
+            if ((90.compareTo(DIA) == -1) || (140.compareTo(SYS) == -1)) {
+              Navigator.pushNamed(context, '/high pressure');
+            } else if ((90.compareTo(DIA) == 1) || (140.compareTo(SYS) == 1)) {
+              Navigator.pushNamed(context, '/normal pressure');
+            } else if ((90.compareTo(DIA) == 0) || (140.compareTo(SYS) == 0)) {
+              Navigator.pushNamed(context, '/normal pressure');
+            } else
+              print(90.compareTo(DIA));
           }
         },
         child: Text(
@@ -154,7 +165,7 @@ class _RecordState extends State<Record> {
                     controller: _data2Controller,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return ("กรุณาใส่หมายเลข HN");
+                        return ("กรุณากรอกตัวเลข");
                       }
                       return null;
                     },
