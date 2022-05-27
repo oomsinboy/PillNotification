@@ -9,10 +9,13 @@ import 'package:flutter_application_1/login/unknowhn.dart';
 import 'package:flutter_application_1/page/graph/graph_page.dart';
 import 'package:flutter_application_1/page/guide_pill.dart';
 import 'package:flutter_application_1/page/detail_pressure.dart';
+import 'package:flutter_application_1/page/high_pressure.dart';
 import 'package:flutter_application_1/page/more.dart';
+import 'package:flutter_application_1/page/normal_pressure.dart';
 import 'package:flutter_application_1/page/screen_main/guidepilltest.dart';
 import 'package:flutter_application_1/page/screen_main/user_form.dart';
 import 'package:flutter_application_1/page/screen_main/user_page.dart';
+import 'package:flutter_application_1/test/screens/dashboard_screen.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -56,6 +59,9 @@ class MyApp extends StatelessWidget {
         '/page datauser': (context) => PageDataUser(),
         '/info pill page': (context) => InfoPillPage(),
         '/guidepill': (BuildContext context) => CourseInfoScreen(),
+        '/high pressure': (context) => HighPressure(),
+        '/normal pressure': (context) => NormalPressure(),
+        '/dashboard': (context) => DashboardScreen(),
 
         UserFormScreen.routeName: (context) => UserFormScreen(),
         AddTaskPage.routeName: (context) => AddTaskPage(),
