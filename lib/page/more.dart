@@ -46,6 +46,12 @@ class _MoreState extends State<More> {
                   onTap: () => Navigator.pushNamed(context, '/graphpage'),
                 ),
                 ListTile(
+                  leading: Icon(Icons.auto_graph),
+                  title: const Text('ความดันโลหิตโดยเฉลี่ย'),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                  onTap: () => Navigator.pushNamed(context, '/avg page'),
+                ),
+                ListTile(
                   leading: Icon(Icons.warning_amber),
 
                   title: const Text('คำแนะนำในการใช้ยา'),

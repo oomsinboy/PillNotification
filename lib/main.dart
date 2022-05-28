@@ -6,6 +6,7 @@ import 'package:flutter_application_1/function/ui/theme.dart';
 import 'package:flutter_application_1/function/ui/theme_service.dart';
 import 'package:flutter_application_1/home.dart';
 import 'package:flutter_application_1/login/unknowhn.dart';
+import 'package:flutter_application_1/page/graph/avg_graph_page.dart';
 import 'package:flutter_application_1/page/graph/graph_page.dart';
 import 'package:flutter_application_1/page/guide_pill.dart';
 import 'package:flutter_application_1/page/detail_pressure.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/high pressure': (context) => HighPressure(),
         '/normal pressure': (context) => NormalPressure(),
         '/dashboard': (context) => DashboardScreen(),
+        '/avg page': (context) => AvgPage(),
 
         UserFormScreen.routeName: (context) => UserFormScreen(),
         AddTaskPage.routeName: (context) => AddTaskPage(),
