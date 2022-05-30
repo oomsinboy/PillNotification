@@ -207,9 +207,9 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    userModel.address!.isNotEmpty
-                        ? Text('ที่อยู่ : ${userModel.address}')
-                        : Text('ที่อยู่ : ไม่มีข้อมูล'),
+                    userModel.address == 'null'
+                        ? Text('ที่อยู่ : ไม่มีข้อมูล')
+                        : Text('ที่อยู่ : ${userModel.address}')
                   ],
                 ),
                 SizedBox(
@@ -234,12 +234,12 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    userModel.congenitalDisease!.isNotEmpty
+                    userModel.congenitalDisease == ''
                         ? Text(
-                            'โรคประจำตัว : ${userModel.congenitalDisease}',
+                            'โรคประจำตัว : ไม่มีข้อมูล',
                           )
                         : Text(
-                            'โรคประจำตัว : ไม่มีข้อมูล',
+                            'โรคประจำตัว : ${userModel.congenitalDisease}',
                           )
                   ],
                 ),
@@ -265,12 +265,12 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    userModel.drugAllergy!.isNotEmpty
+                    userModel.drugAllergy == ''
                         ? Text(
-                            'การแพ้ยา : ${userModel.drugAllergy}',
+                            'การแพ้ยา : ไม่มีข้อมูล',
                           )
                         : Text(
-                            'การแพ้ยา : ไม่มีข้อมูล',
+                            'การแพ้ยา : ${userModel.drugAllergy}',
                           )
                   ],
                 ),

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/home.dart';
 import 'package:flutter_application_1/model/user_model.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 class RegistrationScreen extends StatefulWidget {
   //const CreateAccount({Key? key}) : super(key: key);
@@ -304,6 +305,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.uid = user.uid;
     userModel.firstName = firstNameEditingController.text;
     userModel.numberHN = numberHNEditingController.text;
+    userModel.date =
+        DateFormat("dd=MM=yyy hh:mm:ss").format(DateTime.now()).toString();
 
     await firebaseFirestore
         .collection("users")
