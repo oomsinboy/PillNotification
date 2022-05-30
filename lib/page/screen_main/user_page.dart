@@ -142,7 +142,7 @@ class _PageDataUserState extends State<PageDataUser> {
                       width: 10,
                     ),
                     Text(
-                      'User ID : ' + user.uid,
+                      'latest : ' + '${userModel.date}',
                     ),
                   ],
                 ),
