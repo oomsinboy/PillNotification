@@ -19,7 +19,8 @@ class _HighPressureState extends State<HighPressure> {
         child: Column(
           children: [
             Center(
-              child: Image(image: AssetImage('assets/image/high_pressure.png')),
+              child: Image(
+                  image: AssetImage('assets/image/high_pressure_edit.png')),
             ),
             ElevatedButton(
                 onPressed: () => Navigator.pop(context),

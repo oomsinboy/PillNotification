@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/home.dart';
 import 'package:flutter_application_1/login/loginMail/registrationMail_screen.dart';
 import 'package:flutter_application_1/login/loginMail/resetpasswordmail.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -206,7 +208,15 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((uid) => {
+          .then((value) => {
+                FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(value.user!.uid)
+                    .update({
+                  'user_date': DateFormat("yyyy-MM-dd hh:mm:ss")
+                      .format(DateTime.now())
+                      .toString()
+                }),
                 Fluttertoast.showToast(msg: "Login Successful"),
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
