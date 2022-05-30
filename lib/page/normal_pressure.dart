@@ -20,7 +20,7 @@ class _NormalPressureState extends State<NormalPressure> {
         children: [
           Image(image: AssetImage('assets/image/normal_pressure.png')),
           ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/dashboard'),
+              onPressed: () => Navigator.pop(context),
               style: ElevatedButton.styleFrom(
                   primary: Colors.green,
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
