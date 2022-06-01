@@ -24,6 +24,7 @@ import 'controller/info_pill_page.dart';
 import 'controller/notifications.service.dart';
 import 'function/add_temp.dart';
 import 'function/ui/add_task_bar.dart';
+import 'page/pressure-average.screen.dart';
 
 Future<void> main() async {
   tz.initializeTimeZones();
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
         '/guidepill': (BuildContext context) => CourseInfoScreen(),
         '/high pressure': (context) => HighPressure(),
         '/normal pressure': (context) => NormalPressure(),
+        '/pressure-average': (context) => PressureAveragePage(),
 
         UserFormScreen.routeName: (context) => UserFormScreen(),
         AddTaskPage.routeName: (context) => AddTaskPage(),

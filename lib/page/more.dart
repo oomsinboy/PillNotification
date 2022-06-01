@@ -53,6 +53,15 @@ class _MoreState extends State<More> {
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () => Navigator.pushNamed(context, '/guidepill'),
                 ),
+                ListTile(
+                  leading: Icon(Icons.airline_seat_flat_angled_outlined),
+
+                  title: const Text('ความดันเฉลี่ย'),
+                  //subtitle: Text('เปลี่ยนรหัสผ่านการเข้าใช้งาน'),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                  onTap: () =>
+                      Navigator.pushNamed(context, '/pressure-average'),
+                ),
               ],
             ),
           ),
