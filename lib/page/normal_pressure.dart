@@ -18,7 +18,7 @@ class _NormalPressureState extends State<NormalPressure> {
       body: Center(
           child: Column(
         children: [
-          Image(image: AssetImage('assets/image/normal_pressure_edit.png')),
+          Image(image: AssetImage('assets/image/normal_pressure.png')),
           ElevatedButton(
               onPressed: () => Navigator.pop(context),
               style: ElevatedButton.styleFrom(
